@@ -15,7 +15,21 @@ jobs:
       run: |
         curl -X POST -H 'Content-Type: application/json' \
         --data '{
-          "content": "**New Pull Request Opened!**\n\n**Opened by:** [${{ github.event.pull_request.user.login }}](https://github.com/${{ github.event.pull_request.user.login }})\n**Title:** ${{ github.event.pull_request.title }}\n**Source Branch:** `${{ github.event.pull_request.head.ref }}`\n**Target Branch:** `${{ github.event.pull_request.base.ref }}`\n\n**URL:** [View Pull Request](${{ github.event.pull_request.html_url }})"
+          "username": "GitHub Bot",
+          "avatar_url": "https://example.com/avatar.png",
+          "embeds": [
+            {
+              "title": "**New Pull Request Opened!**",
+              "description": "**Opened by:** [${{ github.event.pull_request.user.login }}](https://github.com/${{ github.event.pull_request.user.login }})\n**Title:** ${{ github.event.pull_request.title }}\n**Source Branch:** `${{ github.event.pull_request.head.ref }}`\n**Target Branch:** `${{ github.event.pull_request.base.ref }}`",
+              "color": 7506394,
+              "fields": [
+                {
+                  "name": "URL",
+                  "value": "[View Pull Request](${{ github.event.pull_request.html_url }})"
+                }
+              ]
+            }
+          ]
         }' $DISCORD_WEBHOOK_URL
 
     - name: Send notification when a PR is merged
@@ -25,5 +39,19 @@ jobs:
       run: |
         curl -X POST -H 'Content-Type: application/json' \
         --data '{
-          "content": "**Pull Request Merged!**\n\n**Merged by:** [${{ github.event.pull_request.merged_by.login }}](https://github.com/${{ github.event.pull_request.merged_by.login }})\n**Title:** ${{ github.event.pull_request.title }}\n**Source Branch:** `${{ github.event.pull_request.head.ref }}`\n**Target Branch:** `${{ github.event.pull_request.base.ref }}`\n\n**URL:** [View Pull Request](${{ github.event.pull_request.html_url }})"
+          "username": "GitHub Bot",
+          "avatar_url": "https://example.com/avatar.png",
+          "embeds": [
+            {
+              "title": "**Pull Request Merged!**",
+              "description": "**Merged by:** [${{ github.event.pull_request.merged_by.login }}](https://github.com/${{ github.event.pull_request.merged_by.login }})\n**Title:** ${{ github.event.pull_request.title }}\n**Source Branch:** `${{ github.event.pull_request.head.ref }}`\n**Target Branch:** `${{ github.event.pull_request.base.ref }}`",
+              "color": 7506394,
+              "fields": [
+                {
+                  "name": "URL",
+                  "value": "[View Pull Request](${{ github.event.pull_request.html_url }})"
+                }
+              ]
+            }
+          ]
         }' $DISCORD_WEBHOOK_URL
